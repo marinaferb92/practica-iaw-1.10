@@ -19,5 +19,10 @@ sudo chown nobody:nogroup /var/www/html
 #Copiamos el archivo de configuracion de NFS
 cp ../nfs/exports /etc/exports
 
+#Reemplazamos el valor de la plantilla de /etc/exports
+sed -i "s#FRONTEND_NETWORK#$FRONTEND_NETWORK#" /etc/exports
+
 #Reiniciamos el servicio NFS
 systemctl restart nfs-kernel-server
+
+
