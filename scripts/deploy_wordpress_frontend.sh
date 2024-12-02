@@ -64,5 +64,7 @@ cp ../htaccess/.htaccess $WORDPRESS_DIRECTORY
 # Dar permisos a www-data para el directorio de WordPress
 chown -R www-data:www-data $WORDPRESS_DIRECTORY
 
+sed -i "/COLLATE/a $_SERVER['HTTPS'] = 'on';" /var/www/html/wp-config.php
+
 # Reiniciar el servicio de Apache 
 systemctl restart apache2 
