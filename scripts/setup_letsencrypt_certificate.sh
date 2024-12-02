@@ -20,5 +20,5 @@ sudo apt remove certbot -y
 #Obtenemos el certificado y configuramos el servidor web Apache.
 sudo certbot --nginx -m $LE_EMAIL --agree-tos --no-eff-email -d $LE_DOMAIN --non-interactive
 
-
+#sudo certbot --apache -m $LE_EMAIL --agree-tos --no-eff-email -d $LE_DOMAIN --non-interactive
 
