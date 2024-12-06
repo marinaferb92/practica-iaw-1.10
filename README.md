@@ -180,8 +180,27 @@ Reiniciamos el servicio de Nginx para que cargue la nueva configuración y se ap
 systemctl restart nginx
 ````
 
+## 5. Instalar Certbot y Configurar el Certificado SSL/TLS con Let’s Encrypt
+Para la realizacion de este apartado seguiremos los pasos detallados en la practica-iaw-1.5 y utilizaremos el script ``` setup_letsencrypt_certificate.sh ```.
+
+aunque deberemos cambiar la última línea del script para que funcione en un sistema Nginx
+````
+sudo certbot --nginx -m $LE_EMAIL --agree-tos --no-eff-email -d $LE_DOMAIN --non-interactive
+````
+
+Tras esto una vez que entremos en el dominio configurado, podremos verificar que el certiicado se ha instalado correctamente.
+
+  ![w9FJxDPDQH](https://github.com/user-attachments/assets/952a028a-2388-48ed-95e6-0af4f1ffab74)
 
 
+[Practica-iaw-1.5](https://github.com/marinaferb92/practica-iaw-1.5)
+
+
+## 6. Comprobaciones
+
+Entraremos en el dominio que hemos configurado, al pulsar `F5` vemos como el balanceador de carga nos irá cambiando de un servidor Frontend a otro repetidamente.
+  ![Z2aiZxGhWF](https://github.com/user-attachments/assets/bbbce43d-5135-4b2a-b76f-f7687e0380ad)
+  ![YGQvEmSrCD](https://github.com/user-attachments/assets/9c8c7a21-6a89-4a7a-9048-8d5633c8fe59)
 
 
 
