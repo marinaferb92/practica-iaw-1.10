@@ -48,7 +48,19 @@ Tambien crearemos y asociaremos dos IPs elásticas a cada una de ellas.
 En la nueva maquina Frontend deberemos ejecutar el script que habiamos creado para la practica 1.9 [install_lamp_frontend.sh](https://github.com/marinaferb92/practica-iaw-1.9/blob/0d65a1954498b7fb4e5bb7d673ec30ec078b2fac/scripts/install_lamp_frontend.sh)
 
 
-## 4. Instalación del balanceador de carga.
+
+## 4. Registrar un Nombre de Dominio
+
+Usamos un proveedor gratuito de nombres de dominio como son Freenom o No-IP.
+En nuestro caso lo hemos hecho a traves de No-IP, nos hemos registrado en la página web y hemos registrado un nombre de dominio con la IP pública del servidor *Loadbalancer*.
+
+![image](https://github.com/user-attachments/assets/dd32dd87-dcb6-4d26-afc4-8d432183d293)
+
+
+
+
+
+## 5. Instalación del balanceador de carga.
 
 ### 1. Cargamos el archivo de variables
 El primer paso de nuestro script sera crear un archivo de variable ``` . env ``` donde iremos definiendo las diferentes variables que necesitemos, y cargarlo en el entorno del script.
@@ -64,6 +76,7 @@ Configuraremos el script para que en caso de que haya errores en algun comando e
 ``` set -ex ```
 
 
+
 ### 3. Actualización del sistema
 
 Actualizamos la lista de paquetes en el sistema.
@@ -71,6 +84,7 @@ Actualizamos la lista de paquetes en el sistema.
 ````
 apt update
 ````
+
 
 
 ### 4. Actualización de todos los paquetes
@@ -82,6 +96,7 @@ apt upgrade -y
 ``
 
 
+
 ### 5. Instalación de Nginx
 
 Instalamos el servidor web Nginx.
@@ -89,6 +104,7 @@ Instalamos el servidor web Nginx.
 ``
 apt install nginx -y
 ``
+
 
 
 ### 6. Deshabilitar el Virtual Host por defecto de Nginx
@@ -111,6 +127,7 @@ if [ -f "/etc/nginx/sites-enabled/default" ]; then
     echo "Virtualhost por defecto deshabilitado."
 fi
 ``
+
 
 
 ### 7. Copiar el archivo de configuración de Nginx
@@ -141,6 +158,7 @@ server {
 
 
 
+
 ### 8. Sustituir los valores en el archivo de configuración
 
 Con el comando sed sustituiremos los valores IP_FRONTEND_1 por el valor de la variable *$IP_FRONTEND_1*
@@ -154,6 +172,7 @@ sed -i "s/IP_FRONTEND_1/$IP_FRONTEND_1/" /etc/nginx/sites-available/loadbalancer
 sed -i "s/IP_FRONTEND_2/$IP_FRONTEND_2/" /etc/nginx/sites-available/loadbalancer.conf
 sed -i "s/LE_DOMAIN/$LE_DOMAIN/" /etc/nginx/sites-available/loadbalancer.conf
 ````
+
 
 
 
@@ -172,6 +191,8 @@ if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]; then
 fi
 ````
 
+
+
 ### 10. Recargar Nginx para aplicar los cambios
 
 Reiniciamos el servicio de Nginx para que cargue la nueva configuración y se apliquen los cambios. 
@@ -179,6 +200,9 @@ Reiniciamos el servicio de Nginx para que cargue la nueva configuración y se ap
 ````
 systemctl restart nginx
 ````
+
+
+
 
 ## 5. Instalar Certbot y Configurar el Certificado SSL/TLS con Let’s Encrypt
 Para la realizacion de este apartado seguiremos los pasos detallados en la practica-iaw-1.5 y utilizaremos el script ``` setup_letsencrypt_certificate.sh ```.
@@ -194,6 +218,8 @@ Tras esto una vez que entremos en el dominio configurado, podremos verificar que
 
 
 [Practica-iaw-1.5](https://github.com/marinaferb92/practica-iaw-1.5)
+
+
 
 
 ## 6. Comprobaciones
