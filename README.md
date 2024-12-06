@@ -93,11 +93,17 @@ apt install nginx -y
 
 ### 6. Deshabilitar el Virtual Host por defecto de Nginx
 
-- <ins>**if [ -f "/etc/nginx/sites-enabled/default" ]:**</ins> Verifica si el archivo default existe en el directorio /etc/nginx/sites-enabled/. (El archivo que configura el Virtual Host por defecto de Nginx.)
-  
-- <ins>**unlink /etc/nginx/sites-enabled/default:**</ins> Si el archivo default existe, se elimina el enlace simbólico a este archivo, habilitando el Virtual Host por defecto
+- <ins>**if [ -f "/etc/nginx/sites-enabled/default" ]:**</ins>
 
-- <ins>**echo "Virtualhost por defecto deshabilitado.":**</ins> Enseña un mensaje en la consola indicando que el Virtual Host por defecto ha sido deshabilitado.
+  Verifica si el archivo default existe en el directorio /etc/nginx/sites-enabled/. (El archivo que configura el Virtual Host por defecto de Nginx.)
+  
+- <ins>**unlink /etc/nginx/sites-enabled/default:**</ins>
+
+  Si el archivo default existe, se elimina el enlace simbólico a este archivo, habilitando el Virtual Host por defecto
+
+- <ins>**echo "Virtualhost por defecto deshabilitado.":**</ins>
+
+  Enseña un mensaje en la consola indicando que el Virtual Host por defecto ha sido deshabilitado.
 
 ``
 if [ -f "/etc/nginx/sites-enabled/default" ]; then
@@ -153,18 +159,26 @@ sed -i "s/LE_DOMAIN/$LE_DOMAIN/" /etc/nginx/sites-available/loadbalancer.conf
 
 ### 9. Habilitar el sitio de configuración de Nginx
 
-- if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]: Verifica si el archivo loadbalancer.conf no existe en el directorio /etc/nginx/sites-enabled/.
-ln -s /etc/nginx/sites-available/loadbalancer.conf /etc/nginx/sites-enabled/: Si el archivo no existe, crea un enlace simbólico a loadbalancer.conf desde el directorio sites-available a sites-enabled. Esto habilita el sitio de Nginx.
+- <ins>**if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]**</ins>:
+
+  Verifica si el archivo loadbalancer.conf no existe en el directorio /etc/nginx/sites-enabled/.
+- <ins>**ln -s /etc/nginx/sites-available/loadbalancer.conf /etc/nginx/sites-enabled/:**</ins>
+
+  Si el archivo no existe, se crea un enlace simbólico a loadbalancer.conf desde el directorio sites-available a sites-enabled.
+  
 ````
 if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]; then
     ln -s /etc/nginx/sites-available/loadbalancer.conf /etc/nginx/sites-enabled/
 fi
 ````
 
+### 10. Recargar Nginx para aplicar los cambios
 
+Reiniciamos el servicio de Nginx para que cargue la nueva configuración y se apliquen los cambios. 
 
-
-
+````
+systemctl restart nginx
+````
 
 
 
