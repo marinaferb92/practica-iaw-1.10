@@ -17,26 +17,52 @@ La infraestructura constará de cuatro máquinas virtuales creadas en Amazon Web
 
 Para ello desarrollaremos varios scripts que dividiremos entre los que tenemos que instalar en la maquina que actuará con Frontend y otros que instalaremos en la maquina que actuará como Backend.
 
-## 2. Creación de una instancia EC2 en AWS
+## 2. Creación de dos instancias nuevas en EC2 en AWS
 
-Para empezar a crear nuestras maquinas deberemos primero crear dos grupos de seguridad diferenciados
--El grupo de seguidad para el <ins>*Frontend*</ins> , que llamaremos por ejemplo <ins>*gs_Frontend*</ins> , con las siguientes reglas de entrada: 
+Para empezar a crear nuestras maquinas deberemos primero crear otro grupo de seguridad
+-El grupo de seguidad para el <ins>*LoadBalancer*</ins>, que llamaremos por ejemplo <ins>*gs_Loadbalancer*</ins> , con las siguientes reglas de entrada: 
 
-  ![nEXNnoDtX0](https://github.com/user-attachments/assets/6c9b5957-657f-4546-bcca-74f3a7a5163d)
+  ![ETVm1eadKB](https://github.com/user-attachments/assets/d8ef9e2f-1513-44dd-a89a-032f45248a8b)
 
 
--El grupo de seguidad para el <ins>*Backend*</ins> , que llamaremos por ejemplo <ins>*gs_Backend*</ins> , con las siguientes reglas de entrada: 
-
-  ![rgdoo0bIyy](https://github.com/user-attachments/assets/9af7db71-59ee-45eb-8605-5496bb20d09c)
-
-A continuacion, lanzaremos las instancias y seleccionaremos para cada una el grupo de seguridad que hemos creado para ellas.
+Crearemos dos instancias:
+- Una llamada LoadBalancer que será el balanceador de carga, con un sistema Ubuntu server y con el grupo de seguridad que hemos creado antes.
+- Otro Frontend al que le asociaremos el grupo de seguridad Frontend que creamos en la practica [Práctica 1.9](https://github.com/marinaferb92/practica-iaw-1.9/tree/main)
 
 Tambien crearemos y asociaremos dos IPs elásticas a cada una de ellas.
 
+- la IP de la maquina <ins>*LoadBalancer*</ins> es la siguiente
+
+  ![sBaaSkFbL6](https://github.com/user-attachments/assets/6e0f45d6-07fc-4036-a08a-ceca9600e414)
+
 - la IP de la maquina <ins>*Frontend*</ins> es la siguiente
 
-  ![TWXoA6P5Op](https://github.com/user-attachments/assets/a5aec8b3-bd36-4085-9615-9babb266c538)
+  ![ESJNli6sv5](https://github.com/user-attachments/assets/6d6ec5f4-4a99-467a-97e5-5d994f676341)
 
-- la IP de la maquina <ins>*Backend*</ins> es la siguiente
 
-  ![zHjLAoEvzB](https://github.com/user-attachments/assets/fcf52f0f-20a1-402c-98ba-4de8ff2c6747)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
