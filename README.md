@@ -7,20 +7,13 @@ La infraestructura constará de cuatro máquinas virtuales creadas en Amazon Web
 
 1. <ins>Balanceador de carga (Load Balancer)</ins>:
 - Nginx como servidor de balanceo.
-- Dirección IP elástica asociada.
 - Configurado para HTTPS con Certbot.
 2. <ins>Dos Frontales Web</ins>:
 - Configurados para servir páginas PHP.
 - Conectados a una base de datos MySQL en el servidor backend.
-- Servidor MySQL:
 3. <ins>Servidor MySQL:</ins>
 - Base de datos central para la arquitectura.
 
-- Configuración del servidor web con Apache y PHP. <ins>(*Frontend*)</ins> 
-- Configuración del servidor MySQL con soporte para conexiones remotas. <ins>(*Backend*)</ins> 
-- Integración de una aplicación web que se conecta al servidor de base de datos remoto. <ins>(*Wordpress*)</ins>
-
-[Usuario] --> [Servidor Apache/PHP] --> [Servidor MySQL]
 
 Para ello desarrollaremos varios scripts que dividiremos entre los que tenemos que instalar en la maquina que actuará con Frontend y otros que instalaremos en la maquina que actuará como Backend.
 
