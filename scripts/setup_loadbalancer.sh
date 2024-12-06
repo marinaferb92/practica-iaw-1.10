@@ -31,8 +31,9 @@ sed -i "s/IP_FRONTEND_2/$IP_FRONTEND_2/" /etc/nginx/sites-available/loadbalancer
 sed -i "s/LE_DOMAIN/$LE_DOMAIN/" /etc/nginx/sites-available/loadbalancer.conf
 
 # Hacemos el enlace simbólico al sitio habilitado
-if [ ! -f "/etc/nginx/sites-available/loadbalancer.conf" ]; then
+if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]; then
     ln -s /etc/nginx/sites-available/loadbalancer.conf /etc/nginx/sites-enabled/
 fi
+
 # Recargamos NGINX
 sudo systemctl restart nginx
