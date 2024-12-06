@@ -39,7 +39,9 @@ Tambien crearemos y asociaremos dos IPs elásticas a cada una de ellas.
 
   ![ESJNli6sv5](https://github.com/user-attachments/assets/6d6ec5f4-4a99-467a-97e5-5d994f676341)
 
+3. Instalación de pila LAMP en el nuevo Frontend
 
+En la nueva maquina Frontend deberemos ejecutar el script que habiamos creado para la practica 1.9 [install_lamp_frontend.sh](https://github.com/marinaferb92/practica-iaw-1.9/blob/0d65a1954498b7fb4e5bb7d673ec30ec078b2fac/scripts/install_lamp_frontend.sh)
 
 
 
