@@ -50,9 +50,11 @@ En la nueva maquina Frontend deberemos ejecutar el script que habiamos creado pa
 
 ## 4. Instalación del balanceador de carga.
 
+### 1. Cargamos el archivo de variables
 El primer paso de nuestro script sera crear un archivo de variable ``` . env ``` donde iremos definiendo las diferentes variables que necesitemos, y cargarlo en el entorno del script.
 
 ``` source.env ```
+
 
 
 ### 2. Configuramos el script
@@ -61,7 +63,8 @@ Configuraremos el script para que en caso de que haya errores en algun comando e
 
 ``` set -ex ```
 
-3. Actualización del sistema
+
+### 3. Actualización del sistema
 
 Actualizamos la lista de paquetes en el sistema.
 
@@ -69,7 +72,8 @@ Actualizamos la lista de paquetes en el sistema.
 apt update
 ````
 
-4. Actualización de todos los paquetes
+
+### 4. Actualización de todos los paquetes
 
 Actualizamos todos los paquetes instalados en el sistemacon la opción -y se aceptan automáticamente la actualización sin pedir confirmación.
 
@@ -77,7 +81,8 @@ Actualizamos todos los paquetes instalados en el sistemacon la opción -y se ace
 apt upgrade -y
 ``
 
-5. Instalación de Nginx
+
+### 5. Instalación de Nginx
 
 Instalamos el servidor web Nginx.
 
@@ -85,11 +90,14 @@ Instalamos el servidor web Nginx.
 apt install nginx -y
 ``
 
-6. Deshabilitar el Virtual Host por defecto de Nginx
 
-- <ins>if [ -f "/etc/nginx/sites-enabled/default" ]:</ins> Verifica si el archivo default existe en el directorio /etc/nginx/sites-enabled/. (El archivo que configura el Virtual Host por defecto de Nginx.)
-- <ins>unlink /etc/nginx/sites-enabled/default:</ins> Si el archivo default existe, se elimina el enlace simbólico a este archivo, habilitando el Virtual Host por defecto.
-- <ins>echo "Virtualhost por defecto deshabilitado.":</ins> Enseña un mensaje en la consola indicando que el Virtual Host por defecto ha sido deshabilitado.
+### 6. Deshabilitar el Virtual Host por defecto de Nginx
+
+- <ins>**if [ -f "/etc/nginx/sites-enabled/default" ]:**</ins> Verifica si el archivo default existe en el directorio /etc/nginx/sites-enabled/. (El archivo que configura el Virtual Host por defecto de Nginx.)
+  
+- <ins>**unlink /etc/nginx/sites-enabled/default:**</ins> Si el archivo default existe, se elimina el enlace simbólico a este archivo, habilitando el Virtual Host por defecto
+
+- <ins>**echo "Virtualhost por defecto deshabilitado.":**</ins> Enseña un mensaje en la consola indicando que el Virtual Host por defecto ha sido deshabilitado.
 
 ``
 if [ -f "/etc/nginx/sites-enabled/default" ]; then
@@ -98,9 +106,11 @@ if [ -f "/etc/nginx/sites-enabled/default" ]; then
 fi
 ``
 
-7. Copiar el archivo de configuración de Nginx
+
+### 7. Copiar el archivo de configuración de Nginx
 
 Copiamos el archivo loadbalancer.conf al directorio /etc/nginx/sites-available/. 
+
 ``
 cp ../conf/loadbalancer.conf /etc/nginx/sites-available/
 ``
@@ -122,6 +132,36 @@ server {
     }
 }
 ````
+
+
+
+### 8. Sustituir los valores en el archivo de configuración
+
+Con el comando sed sustituiremos los valores IP_FRONTEND_1 por el valor de la variable *$IP_FRONTEND_1*
+
+También sustituiremos el valor de IP_FRONTEND_2 por el valor de la variable $IP_FRONTEND_2 y el de LE_DOMAIN por el valor de la variable $LE_DOMAIN.
+
+Estas variables estarán definidas en el archivo *.env*
+
+````
+sed -i "s/IP_FRONTEND_1/$IP_FRONTEND_1/" /etc/nginx/sites-available/loadbalancer.conf
+sed -i "s/IP_FRONTEND_2/$IP_FRONTEND_2/" /etc/nginx/sites-available/loadbalancer.conf
+sed -i "s/LE_DOMAIN/$LE_DOMAIN/" /etc/nginx/sites-available/loadbalancer.conf
+````
+
+
+
+### 9. Habilitar el sitio de configuración de Nginx
+
+- if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]: Verifica si el archivo loadbalancer.conf no existe en el directorio /etc/nginx/sites-enabled/.
+ln -s /etc/nginx/sites-available/loadbalancer.conf /etc/nginx/sites-enabled/: Si el archivo no existe, crea un enlace simbólico a loadbalancer.conf desde el directorio sites-available a sites-enabled. Esto habilita el sitio de Nginx.
+````
+if [ ! -f "/etc/nginx/sites-enabled/loadbalancer.conf" ]; then
+    ln -s /etc/nginx/sites-available/loadbalancer.conf /etc/nginx/sites-enabled/
+fi
+````
+
+
 
 
 
